@@ -55,7 +55,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteHandler = exports.postHandler = exports.getHandler = exports.defaultHandler = exports.deleteFolder = exports.createFolder = exports.getFolders = void 0;
+exports.deleteFolder = exports.createFolder = exports.getFolders = void 0;
 var mongoDB = __importStar(require("mongodb"));
 var folder_1 = require("../models/folder");
 var database_services_1 = require("../services/database.services");
@@ -126,78 +126,3 @@ var deleteFolder = function (id) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 exports.deleteFolder = deleteFolder;
-// handlers
-// 1. default handlers
-var defaultHandler = function (req, res) {
-    res.writeHead(200, {
-        "Content-Type": "application/json",
-    });
-    res.write(JSON.stringify({
-        message: "API not found at " + req.url,
-    }));
-    res.end();
-};
-exports.defaultHandler = defaultHandler;
-// 2. get operation Handler
-var getHandler = function (req, res, parentDir) { return __awaiter(void 0, void 0, void 0, function () {
-    var folders;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, getFolders(parentDir)];
-            case 1:
-                folders = _a.sent();
-                res.writeHead(200, {
-                    "Content-Type": "application/json",
-                });
-                res.write(JSON.stringify({
-                    message: "Data was retrieved successfully.",
-                    data: folders,
-                }));
-                res.end();
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.getHandler = getHandler;
-// 3. POST handler
-var postHandler = function (req, res, parentDir, name) { return __awaiter(void 0, void 0, void 0, function () {
-    var status;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, exports.createFolder(name, parentDir)];
-            case 1:
-                status = _a.sent();
-                res.writeHead(200, {
-                    "Content-Type": "application/json",
-                });
-                res.write(JSON.stringify({
-                    message: "Data was retrieved successfully.",
-                    status: status,
-                }));
-                res.end();
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.postHandler = postHandler;
-// 4. DELETE handler
-var deleteHandler = function (req, res, id) { return __awaiter(void 0, void 0, void 0, function () {
-    var status;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, exports.deleteFolder(id)];
-            case 1:
-                status = _a.sent();
-                res.writeHead(200, {
-                    "Content-Type": "application/json",
-                });
-                res.write(JSON.stringify({
-                    message: "Data was retrieved successfully.",
-                    status: status,
-                }));
-                res.end();
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.deleteHandler = deleteHandler;

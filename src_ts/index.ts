@@ -5,7 +5,7 @@ import {
   deleteHandler,
   getHandler,
   postHandler,
-} from "./controller/controller";
+} from "./handlers/handlers";
 
 // Global configuration
 const server = http.createServer(

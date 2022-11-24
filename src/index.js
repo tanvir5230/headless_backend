@@ -57,7 +57,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // External Dependencies
 var http = __importStar(require("http"));
-var controller_1 = require("./controller/controller");
+var handlers_1 = require("./handlers/handlers");
 // Global configuration
 var server = http.createServer(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var reqMethod, reqUrl, reqUrlArr, parentDir, reqUrlArr, folderName, parentDir, reqUrlArr, id;
@@ -67,13 +67,13 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
         switch (reqMethod) {
             case "GET":
                 if (reqUrl === "/") {
-                    controller_1.getHandler(req, res, "root");
+                    handlers_1.getHandler(req, res, "root");
                 }
                 else if (reqUrl !== undefined) {
                     reqUrlArr = reqUrl.split("");
                     reqUrlArr.shift();
                     parentDir = reqUrlArr.join("");
-                    controller_1.getHandler(req, res, parentDir);
+                    handlers_1.getHandler(req, res, parentDir);
                 }
                 break;
             case "POST":
@@ -82,18 +82,18 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
                     folderName = reqUrlArr.pop() || "xyz";
                     reqUrlArr.shift();
                     parentDir = reqUrlArr.join("/");
-                    controller_1.postHandler(req, res, parentDir, folderName);
+                    handlers_1.postHandler(req, res, parentDir, folderName);
                 }
                 break;
             case "DELETE":
                 if (reqUrl !== undefined) {
                     reqUrlArr = reqUrl.split("/");
                     id = reqUrlArr.pop() || "";
-                    controller_1.deleteHandler(req, res, id);
+                    handlers_1.deleteHandler(req, res, id);
                 }
                 break;
             default:
-                controller_1.defaultHandler(req, res);
+                handlers_1.defaultHandler(req, res);
                 break;
         }
         return [2 /*return*/];
