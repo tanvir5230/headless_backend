@@ -16,6 +16,7 @@ export async function getFolders(parent: string): Promise<mongoDB.Document> {
   }
 }
 
+// Create folder
 export const createFolder = async (
   name: string,
   parentDir: string
@@ -24,6 +25,15 @@ export const createFolder = async (
   try {
     const result = await root.insertOne(folder);
     return result.insertedId ? true : false;
+  } finally {
+    await client.close();
+  }
+};
+// Delete a folder
+export const deleteFolder = async (id: string): Promise<boolean> => {
+  try {
+    const result = await root.deleteOne({ _id: new mongoDB.ObjectId(id) });
+    return result.deletedCount > 0;
   } finally {
     await client.close();
   }
@@ -73,6 +83,25 @@ export const postHandler = async (
   name: string
 ) => {
   const status: boolean = await createFolder(name, parentDir);
+  res.writeHead(200, {
+    "Content-Type": "application/json",
+  });
+  res.write(
+    JSON.stringify({
+      message: "Data was retrieved successfully.",
+      status,
+    })
+  );
+  res.end();
+};
+
+// 4. DELETE handler
+export const deleteHandler = async (
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+  id: string
+) => {
+  const status: boolean = await deleteFolder(id);
   res.writeHead(200, {
     "Content-Type": "application/json",
   });

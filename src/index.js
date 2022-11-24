@@ -60,7 +60,7 @@ var http = __importStar(require("http"));
 var controller_1 = require("./controller/controller");
 // Global configuration
 var server = http.createServer(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var reqMethod, reqUrl, reqUrlArr, parentDir, reqUrlArr, folderName, parentDir;
+    var reqMethod, reqUrl, reqUrlArr, parentDir, reqUrlArr, folderName, parentDir, reqUrlArr, id;
     return __generator(this, function (_a) {
         reqMethod = req.method;
         reqUrl = req.url;
@@ -85,8 +85,14 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
                     controller_1.postHandler(req, res, parentDir, folderName);
                 }
                 break;
+            case "DELETE":
+                if (reqUrl !== undefined) {
+                    reqUrlArr = reqUrl.split("/");
+                    id = reqUrlArr.pop() || "";
+                    controller_1.deleteHandler(req, res, id);
+                }
+                break;
             default:
-                console.log("hello");
                 controller_1.defaultHandler(req, res);
                 break;
         }

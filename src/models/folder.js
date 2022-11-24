@@ -14,4 +14,3 @@ var Folder = /** @class */ (function () {
     return Folder;
 }());
 exports.Folder = Folder;
-console.log(new Folder("foldera", "root/folder1"));

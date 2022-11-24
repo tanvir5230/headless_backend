@@ -2,6 +2,7 @@
 import * as http from "http";
 import {
   defaultHandler,
+  deleteHandler,
   getHandler,
   postHandler,
 } from "./controller/controller";
@@ -33,8 +34,15 @@ const server = http.createServer(
         }
         break;
 
+      case "DELETE":
+        if (reqUrl !== undefined) {
+          const reqUrlArr: Array<string> = reqUrl.split("/");
+          const id: string = reqUrlArr.pop() || "";
+          deleteHandler(req, res, id);
+        }
+        break;
+
       default:
-        console.log("hello");
         defaultHandler(req, res);
         break;
     }

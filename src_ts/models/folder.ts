@@ -10,4 +10,3 @@ export class Folder {
     this.createdAt = new Date();
   }
 }
-console.log(new Folder("foldera", "root/folder1"));
