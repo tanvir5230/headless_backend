@@ -60,7 +60,7 @@ var http = __importStar(require("http"));
 var controller_1 = require("./controller/controller");
 // Global configuration
 var server = http.createServer(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var reqMethod, reqUrl, reqUrlArr, parentDir;
+    var reqMethod, reqUrl, reqUrlArr, parentDir, reqUrlArr, folderName, parentDir;
     return __generator(this, function (_a) {
         reqMethod = req.method;
         reqUrl = req.url;
@@ -74,6 +74,15 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
                     reqUrlArr.shift();
                     parentDir = reqUrlArr.join("");
                     controller_1.getHandler(req, res, parentDir);
+                }
+                break;
+            case "POST":
+                if (reqUrl !== undefined) {
+                    reqUrlArr = reqUrl.split("/");
+                    folderName = reqUrlArr.pop() || "xyz";
+                    reqUrlArr.shift();
+                    parentDir = reqUrlArr.join("/");
+                    controller_1.postHandler(req, res, parentDir, folderName);
                 }
                 break;
             default:

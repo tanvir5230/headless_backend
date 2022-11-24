@@ -2,8 +2,8 @@
 import * as http from "http";
 import {
   defaultHandler,
-  getFolders,
   getHandler,
+  postHandler,
 } from "./controller/controller";
 
 // Global configuration
@@ -20,6 +20,16 @@ const server = http.createServer(
           reqUrlArr.shift();
           const parentDir: string = reqUrlArr.join("");
           getHandler(req, res, parentDir);
+        }
+        break;
+
+      case "POST":
+        if (reqUrl !== undefined) {
+          const reqUrlArr: Array<string> = reqUrl.split("/");
+          const folderName: string = reqUrlArr.pop() || "xyz";
+          reqUrlArr.shift();
+          const parentDir: string = reqUrlArr.join("/");
+          postHandler(req, res, parentDir, folderName);
         }
         break;
 

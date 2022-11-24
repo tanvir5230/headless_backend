@@ -36,7 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHandler = exports.defaultHandler = exports.getFolders = void 0;
+exports.postHandler = exports.getHandler = exports.defaultHandler = exports.createFolder = exports.getFolders = void 0;
+var folder_1 = require("../models/folder");
 var database_services_1 = require("../services/database.services");
 // get folder structure
 function getFolders(parent) {
@@ -62,6 +63,28 @@ function getFolders(parent) {
     });
 }
 exports.getFolders = getFolders;
+var createFolder = function (name, parentDir) { return __awaiter(void 0, void 0, void 0, function () {
+    var folder, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                folder = new folder_1.Folder(name, parentDir);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, , 3, 5]);
+                return [4 /*yield*/, database_services_1.root.insertOne(folder)];
+            case 2:
+                result = _a.sent();
+                return [2 /*return*/, result.insertedId ? true : false];
+            case 3: return [4 /*yield*/, database_services_1.client.close()];
+            case 4:
+                _a.sent();
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.createFolder = createFolder;
 // handlers
 // 1. default handlers
 var defaultHandler = function (req, res) {
@@ -95,3 +118,24 @@ var getHandler = function (req, res, parentDir) { return __awaiter(void 0, void 
     });
 }); };
 exports.getHandler = getHandler;
+// 3. POST handler
+var postHandler = function (req, res, parentDir, name) { return __awaiter(void 0, void 0, void 0, function () {
+    var status;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, exports.createFolder(name, parentDir)];
+            case 1:
+                status = _a.sent();
+                res.writeHead(200, {
+                    "Content-Type": "application/json",
+                });
+                res.write(JSON.stringify({
+                    message: "Data was retrieved successfully.",
+                    status: status,
+                }));
+                res.end();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.postHandler = postHandler;
