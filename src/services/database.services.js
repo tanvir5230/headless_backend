@@ -19,10 +19,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.root = exports.database = exports.client = void 0;
 // External Dependencies
 var mongoDB = __importStar(require("mongodb"));
-// import * as dotenv from "dotenv";
 // Global Variables
-var client = new mongoDB.MongoClient("mongodb://localhost:27017");
-var db = client.db("folderStructure");
-var collection = db.collection("root");
+exports.client = new mongoDB.MongoClient("mongodb://localhost:27017");
+exports.database = exports.client.db("folderStructure");
+exports.root = exports.database.collection("root");

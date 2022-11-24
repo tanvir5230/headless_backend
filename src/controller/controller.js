@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -55,35 +36,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// External Dependencies
-var http = __importStar(require("http"));
-var controller_1 = require("./controller/controller");
-// Global configuration
-var server = http.createServer(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var reqMethod, reqUrl, reqUrlArr, parentDir;
-    return __generator(this, function (_a) {
-        reqMethod = req.method;
-        reqUrl = req.url;
-        switch (reqMethod) {
-            case "GET":
-                if (reqUrl === "/") {
-                    controller_1.getHandler(req, res, "root");
-                }
-                else if (reqUrl !== undefined) {
-                    reqUrlArr = reqUrl.split("");
-                    reqUrlArr.shift();
-                    parentDir = reqUrlArr.join("");
-                    controller_1.getHandler(req, res, parentDir);
-                }
-                break;
-            default:
-                console.log("hello");
-                controller_1.defaultHandler(req, res);
-                break;
-        }
-        return [2 /*return*/];
+exports.getHandler = exports.defaultHandler = exports.getFolders = void 0;
+var database_services_1 = require("../services/database.services");
+// get folder structure
+function getFolders(parent) {
+    return __awaiter(this, void 0, void 0, function () {
+        var folders;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, , 2, 4]);
+                    return [4 /*yield*/, database_services_1.root
+                            .find({ parent: parent })
+                            .toArray()];
+                case 1:
+                    folders = _a.sent();
+                    return [2 /*return*/, folders];
+                case 2: return [4 /*yield*/, database_services_1.client.close()];
+                case 3:
+                    _a.sent();
+                    return [7 /*endfinally*/];
+                case 4: return [2 /*return*/];
+            }
+        });
     });
-}); });
-server.listen(3000, function () {
-    console.log("server is running at port 3000.");
-});
+}
+exports.getFolders = getFolders;
+// handlers
+// 1. default handlers
+var defaultHandler = function (req, res) {
+    res.writeHead(200, {
+        "Content-Type": "application/json",
+    });
+    res.write(JSON.stringify({
+        message: "API not found at " + req.url,
+    }));
+    res.end();
+};
+exports.defaultHandler = defaultHandler;
+// 2. get operation Handler
+var getHandler = function (req, res, parentDir) { return __awaiter(void 0, void 0, void 0, function () {
+    var folders;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, getFolders(parentDir)];
+            case 1:
+                folders = _a.sent();
+                res.writeHead(200, {
+                    "Content-Type": "application/json",
+                });
+                res.write(JSON.stringify({
+                    message: "Data was retrieved successfully.",
+                    data: folders,
+                }));
+                res.end();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getHandler = getHandler;
