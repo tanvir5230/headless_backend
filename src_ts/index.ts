@@ -50,6 +50,6 @@ const server = http.createServer(
   }
 );
 
-server.listen(port, () => {
+server.listen(process.env.PORT || 5000, () => {
   console.log(`server is running at port ${port}.`);
 });

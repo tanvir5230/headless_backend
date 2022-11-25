@@ -100,6 +100,6 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
         return [2 /*return*/];
     });
 }); });
-server.listen(database_services_1.port, function () {
+server.listen(process.env.PORT || 5000, function () {
     console.log("server is running at port " + database_services_1.port + ".");
 });
