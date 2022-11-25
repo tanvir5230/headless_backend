@@ -56,6 +56,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteFolder = exports.createFolder = exports.getFolders = void 0;
+// External Dependencies
 var mongoDB = __importStar(require("mongodb"));
 var folder_1 = require("../models/folder");
 var database_services_1 = require("../services/database.services");

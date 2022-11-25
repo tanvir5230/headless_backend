@@ -1,5 +1,4 @@
 // External Dependencies
-import * as http from "http";
 import * as mongoDB from "mongodb";
 import { Folder } from "../models/folder";
 import { client, root } from "../services/database.services";

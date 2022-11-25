@@ -6,15 +6,20 @@ import {
   deleteFolder,
 } from "../controller/controller";
 
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+  "Access-Control-Max-Age": 2592000, // 30 days
+  /** add other headers as per requirement */
+};
+
 // handlers
 // 1. default handlers
 export const defaultHandler = (
   req: http.IncomingMessage,
   res: http.ServerResponse
 ) => {
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
+  res.writeHead(200, headers);
   res.write(
     JSON.stringify({
       message: `API not found at ${req.url}`,
@@ -30,9 +35,7 @@ export const getHandler = async (
   parentDir: string
 ) => {
   const folders = await getFolders(parentDir);
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
+  res.writeHead(200, headers);
   res.write(
     JSON.stringify({
       message: folders ? "Data was retrieved successfully." : "No folder found",
@@ -50,9 +53,7 @@ export const postHandler = async (
   name: string
 ) => {
   const status: boolean = await createFolder(name, parentDir);
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
+  res.writeHead(200, headers);
   res.write(
     JSON.stringify({
       message: status
@@ -71,9 +72,7 @@ export const deleteHandler = async (
   id: string
 ) => {
   const status: boolean = await deleteFolder(id);
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
+  res.writeHead(200, headers);
   res.write(
     JSON.stringify({
       message: status
