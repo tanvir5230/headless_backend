@@ -19,10 +19,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.root = exports.database = exports.client = void 0;
+exports.port = exports.root = exports.database = exports.client = void 0;
 // External Dependencies
 var mongoDB = __importStar(require("mongodb"));
+var dotenv = __importStar(require("dotenv"));
+dotenv.config();
+console.log(process.env.PORT);
 // Global Variables
-exports.client = new mongoDB.MongoClient("mongodb://localhost:27017");
-exports.database = exports.client.db("folderStructure");
-exports.root = exports.database.collection("root");
+exports.client = new mongoDB.MongoClient(process.env.DB_CONN_STRING || "");
+exports.database = exports.client.db(process.env.DB_NAME || "");
+exports.root = exports.database.collection(process.env.FOLDER_COLLECTION || "");
+exports.port = process.env.PORT;

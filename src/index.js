@@ -58,6 +58,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // External Dependencies
 var http = __importStar(require("http"));
 var handlers_1 = require("./handlers/handlers");
+var database_services_1 = require("./services/database.services");
 // Global configuration
 var server = http.createServer(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var reqMethod, reqUrl, reqUrlArr, parentDir, reqUrlArr, folderName, parentDir, reqUrlArr, id;
@@ -99,6 +100,6 @@ var server = http.createServer(function (req, res) { return __awaiter(void 0, vo
         return [2 /*return*/];
     });
 }); });
-server.listen(3000, function () {
-    console.log("server is running at port 3000.");
+server.listen(database_services_1.port, function () {
+    console.log("server is running at port " + database_services_1.port + ".");
 });
