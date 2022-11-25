@@ -7,6 +7,7 @@ import { client, root } from "../services/database.services";
 // get folder structure
 export async function getFolders(parent: string): Promise<mongoDB.Document> {
   try {
+    await client.connect();
     const folders: mongoDB.Document = await root
       .find({ parent: parent })
       .toArray();
@@ -21,6 +22,7 @@ export const createFolder = async (
   name: string,
   parentDir: string
 ): Promise<boolean> => {
+  await client.connect();
   const folder: Folder = new Folder(name, parentDir);
   try {
     const result = await root.insertOne(folder);
@@ -32,6 +34,7 @@ export const createFolder = async (
 // Delete a folder
 export const deleteFolder = async (id: string): Promise<boolean> => {
   try {
+    await client.connect();
     const result = await root.deleteOne({ _id: new mongoDB.ObjectId(id) });
     return result.deletedCount > 0;
   } finally {

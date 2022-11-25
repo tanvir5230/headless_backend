@@ -49,4 +49,6 @@ const server = http.createServer(
   }
 );
 
-server.listen(process.env.PORT || 5000);
+server.listen(process.env.PORT || 5000, () => {
+  console.log(`server opened at ${process.env.PORT || 5000}`);
+});

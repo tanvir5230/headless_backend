@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -37,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -70,18 +66,21 @@ function getFolders(parent) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, , 2, 4]);
+                    _a.trys.push([0, , 3, 5]);
+                    return [4 /*yield*/, database_services_1.client.connect()];
+                case 1:
+                    _a.sent();
                     return [4 /*yield*/, database_services_1.root
                             .find({ parent: parent })
                             .toArray()];
-                case 1:
+                case 2:
                     folders = _a.sent();
                     return [2 /*return*/, folders];
-                case 2: return [4 /*yield*/, database_services_1.client.close()];
-                case 3:
+                case 3: return [4 /*yield*/, database_services_1.client.close()];
+                case 4:
                     _a.sent();
                     return [7 /*endfinally*/];
-                case 4: return [2 /*return*/];
+                case 5: return [2 /*return*/];
             }
         });
     });
@@ -92,20 +91,22 @@ var createFolder = function (name, parentDir) { return __awaiter(void 0, void 0,
     var folder, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                folder = new folder_1.Folder(name, parentDir);
-                _a.label = 1;
+            case 0: return [4 /*yield*/, database_services_1.client.connect()];
             case 1:
-                _a.trys.push([1, , 3, 5]);
-                return [4 /*yield*/, database_services_1.root.insertOne(folder)];
+                _a.sent();
+                folder = new folder_1.Folder(name, parentDir);
+                _a.label = 2;
             case 2:
+                _a.trys.push([2, , 4, 6]);
+                return [4 /*yield*/, database_services_1.root.insertOne(folder)];
+            case 3:
                 result = _a.sent();
                 return [2 /*return*/, result.insertedId ? true : false];
-            case 3: return [4 /*yield*/, database_services_1.client.close()];
-            case 4:
+            case 4: return [4 /*yield*/, database_services_1.client.close()];
+            case 5:
                 _a.sent();
                 return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
@@ -116,16 +117,19 @@ var deleteFolder = function (id) { return __awaiter(void 0, void 0, void 0, func
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, , 2, 4]);
-                return [4 /*yield*/, database_services_1.root.deleteOne({ _id: new mongoDB.ObjectId(id) })];
+                _a.trys.push([0, , 3, 5]);
+                return [4 /*yield*/, database_services_1.client.connect()];
             case 1:
+                _a.sent();
+                return [4 /*yield*/, database_services_1.root.deleteOne({ _id: new mongoDB.ObjectId(id) })];
+            case 2:
                 result = _a.sent();
                 return [2 /*return*/, result.deletedCount > 0];
-            case 2: return [4 /*yield*/, database_services_1.client.close()];
-            case 3:
+            case 3: return [4 /*yield*/, database_services_1.client.close()];
+            case 4:
                 _a.sent();
                 return [7 /*endfinally*/];
-            case 4: return [2 /*return*/];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
