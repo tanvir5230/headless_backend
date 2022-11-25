@@ -6,7 +6,6 @@ import {
   getHandler,
   postHandler,
 } from "./handlers/handlers";
-import { port } from "./services/database.services";
 
 // Global configuration
 const server = http.createServer(
@@ -50,6 +49,4 @@ const server = http.createServer(
   }
 );
 
-server.listen(process.env.PORT || 5000, () => {
-  console.log(`server is running at port ${port}.`);
-});
+server.listen(process.env.PORT || 5000);

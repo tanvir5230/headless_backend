@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -45,7 +45,7 @@ var defaultHandler = function (req, res) {
         "Content-Type": "application/json",
     });
     res.write(JSON.stringify({
-        message: "API not found at " + req.url,
+        message: "API not found at ".concat(req.url),
     }));
     res.end();
 };
@@ -55,7 +55,7 @@ var getHandler = function (req, res, parentDir) { return __awaiter(void 0, void 
     var folders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, controller_1.getFolders(parentDir)];
+            case 0: return [4 /*yield*/, (0, controller_1.getFolders)(parentDir)];
             case 1:
                 folders = _a.sent();
                 res.writeHead(200, {
@@ -76,7 +76,7 @@ var postHandler = function (req, res, parentDir, name) { return __awaiter(void 0
     var status;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, controller_1.createFolder(name, parentDir)];
+            case 0: return [4 /*yield*/, (0, controller_1.createFolder)(name, parentDir)];
             case 1:
                 status = _a.sent();
                 res.writeHead(200, {
@@ -99,7 +99,7 @@ var deleteHandler = function (req, res, id) { return __awaiter(void 0, void 0, v
     var status;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, controller_1.deleteFolder(id)];
+            case 0: return [4 /*yield*/, (0, controller_1.deleteFolder)(id)];
             case 1:
                 status = _a.sent();
                 res.writeHead(200, {
